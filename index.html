@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RohanraoC</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- GLOBAL STYLES --- */
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f6f9fc; 
+            color: #425466;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- HEADER --- */
+        header {
+            background-color: #0a2540; 
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.8em; 
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+
+        header p {
+            margin-top: 12px;
+            color: #aab7c4; 
+            font-size: 1.1em;
+            font-weight: 300;
+        }
+
+        /* --- MAIN CONTENT AREA --- */
+        .container {
+            flex: 1; 
+            max-width: 1000px;
+            margin: 0 auto;
+            padding-top: 50px; 
+            padding-bottom: 40px;
+            padding-left: 20px;
+            padding-right: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center; 
+        }
+
+        /* --- THE GRID --- */
+        .portfolio-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px; 
+        }
+
+        /* --- THE CARDS --- */
+        .card {
+            background: white;
+            width: 240px; 
+            height: 180px; 
+            border-radius: 12px; 
+            box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            color: #0a2540; 
+            border: 1px solid transparent; 
+            transition: all 0.3s ease; 
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-7px); 
+            box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25), 0 8px 16px -8px rgba(0, 0, 0, 0.3);
+            color: #2196f3; 
+        }
+
+        .card h3 {
+            margin: 0 0 8px 0;
+            font-size: 1.25em;
+            font-weight: 600;
+        }
+        
+        .card span {
+            font-size: 0.9em;
+            color: #8898aa;
+            font-weight: 400;
+        }
+
+        /* --- MODAL (POP-UP) STYLES --- */
+        .modal-overlay {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); 
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            box-shadow: 0 15px 35px rgba(50,50,93,0.2);
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #8898aa;
+        }
+        
+        .close-btn:hover { color: #0a2540; }
+
+        /* Project Item Styles */
+        .project-item {
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        .project-item:last-child { border-bottom: none; }
+        .project-item h4 { margin: 0 0 5px 0; color: #0a2540; }
+        .project-item p { margin: 0; font-size: 0.9em; }
+
+        /* Contact Option Styles */
+        .contact-option {
+            display: block;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.2s;
+            text-align: center;
+        }
+        .contact-option:hover { transform: scale(1.02); }
+        .primary { background-color: #0a2540; color: white; }
+        .secondary { background-color: #e6ebf1; color: #0a2540; }
+
+        /* Copy Button Styles */
+        .copy-container {
+            display: flex;
+            margin-top: 20px;
+            gap: 10px;
+        }
+        .copy-container input {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background: #f9f9f9;
+            color: #555;
+        }
+        .copy-container button {
+            padding: 8px 15px;
+            background-color: #0a2540;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .copy-container button:active { transform: scale(0.95); }
+
+        /* --- FOOTER --- */
+        footer {
+            text-align: center;
+            padding: 25px;
+            background-color: #06182a; 
+            color: #6b7c93;
+            font-size: 0.85em;
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Rohan Rao Celvaji</h1>
+        <p>Developer. Thinker. Builder.</p>
+    </header>
+
+    <div class="container">
+        <div class="portfolio-grid">
+            
+            <a href="https://codeforces.com/" target="_blank" class="card">
+                <h3>Codeforces</h3>
+                <span>View Profile &rarr;</span>
+            </a>
+
+            <a id="resume-btn" href="https://drive.google.com/file/d/1NQlHPEV-QHqm6K-v1a8zIutw9syExV5A/view?usp=sharing" target="_blank" class="card">
+                <h3>Resume</h3>
+                <span>Open Document</span>
+            </a>
+
+            <a href="javascript:void(0)" id="projects-btn" class="card">
+                <h3>Projects</h3>
+                <span>View Work</span>
+            </a>
+
+            <a href="javascript:void(0)" id="contact-btn" class="card">
+                <h3>Contact Me</h3>
+                <span>Get in Touch</span>
+            </a>
+
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="projects-modal">
+        <div class="modal-content">
+            <span class="close-btn" id="close-projects">&times;</span>
+            <h2 style="margin-top:0;">My Projects</h2>
+            
+            <div class="project-item">
+                <h4>Portfolio Website</h4>
+                <p>Designed a clean, responsive portfolio using HTML, CSS, and JS.</p>
+            </div>
+
+            <div class="project-item">
+                <h4>Algorithm Solver</h4>
+                <p>Python script that solves complex sorting problems.</p>
+            </div>
+            
+            <div class="project-item">
+                <h4>Weather App</h4>
+                <p>A simple React app to check the weather.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="contact-modal">
+        <div class="modal-content" style="text-align: center;">
+            <span class="close-btn" id="close-contact">&times;</span>
+            <h2 style="margin-top:0;">Contact Me</h2>
+            <p style="margin-bottom: 25px;">Choose how you want to send your message:</p>
+            
+            <a href="mailto:salvajirohanrao@gmail.com" class="contact-option primary">
+                Open Default Mail App
+            </a>
+
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=salvajirohanrao@gmail.com" target="_blank" class="contact-option secondary">
+                Open in Gmail (Browser)
+            </a>
+
+            <div class="copy-container">
+                <input type="text" value="salvajirohanrao@gmail.com" id="email-text" readonly>
+                <button onclick="copyEmail()">Copy</button>
+            </div>
+            <p id="copy-success" style="color: green; font-size: 0.8em; opacity: 0; transition: opacity 0.3s;">Email copied to clipboard!</p>
+        </div>
+    </div>
+
+    <footer>
+        &copy; <span id="year"></span> Rohan Rao Celvaji. All rights reserved.
+    </footer>
+
+    <script>
+        // Set Year in Footer
+        document.getElementById("year").innerText = new Date().getFullYear();
+
+        // --- GENERIC MODAL FUNCTION ---
+        // This function handles opening and closing for ANY modal we create
+        function setupModal(triggerId, modalId, closeId) {
+            const trigger = document.getElementById(triggerId);
+            const modal = document.getElementById(modalId);
+            const close = document.getElementById(closeId);
+
+            if(trigger && modal && close) {
+                // Open
+                trigger.addEventListener('click', () => {
+                    modal.classList.add('active');
+                });
+
+                // Close with X button
+                close.addEventListener('click', () => {
+                    modal.classList.remove('active');
+                });
+
+                // Close by clicking outside the box
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        modal.classList.remove('active');
+                    }
+                });
+            }
+        }
+
+        // Initialize Modals
+        setupModal('projects-btn', 'projects-modal', 'close-projects');
+        setupModal('contact-btn', 'contact-modal', 'close-contact');
+
+        // --- COPY TO CLIPBOARD LOGIC ---
+        function copyEmail() {
+            const emailInput = document.getElementById("email-text");
+            emailInput.select();
+            emailInput.setSelectionRange(0, 99999); // For mobile devices
+            
+            navigator.clipboard.writeText(emailInput.value);
+
+            // Show success message briefly
+            const msg = document.getElementById("copy-success");
+            msg.style.opacity = "1";
+            setTimeout(() => { msg.style.opacity = "0"; }, 2000);
+        }
+    </script>
+
+</body>
+</html>
